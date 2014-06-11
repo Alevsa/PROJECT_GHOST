@@ -12,12 +12,28 @@ public class PlayerControls : MonoBehaviour
 
     void Start()
     {
+		Game.Unpause();
         playersBoxCollider = GetComponent<BoxCollider2D>();
         PlayersAnim = GetComponent<Animator>();
     }
 
+	void Update()
+	{
+		if (Input.GetKeyDown(KeyCode.Escape))
+		{
+			if (Game.CurrentState == Game.State.Running)
+			{
+				Game.Pause();
+			}
+			else if (Game.CurrentState == Game.State.Paused)
+			{
+				Game.Unpause();
+			}
+		}
+	}
+
     void FixedUpdate()
-    {
+	{
         float h = Input.GetAxisRaw("Horizontal");
         float v = Input.GetAxisRaw("Vertical");
 
