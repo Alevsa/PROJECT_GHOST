@@ -24,7 +24,7 @@ public class PlayerControls : MonoBehaviour
         PlayersAnim.SetFloat("Horizontal", h);
         PlayersAnim.SetFloat("Vertical", v);
 
-        if (h * rigidbody2D.velocity.x < maxSpeed && v * rigidbody2D.velocity.y < maxSpeed)
+        if (h * rigidbody2D.velocity.x < maxSpeed || v * rigidbody2D.velocity.y < maxSpeed)
             rigidbody2D.velocity = new Vector2(h * moveForce, v * moveForce);
 
         if (Mathf.Abs(rigidbody2D.velocity.x) > maxSpeed)
