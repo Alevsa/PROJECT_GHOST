@@ -3,16 +3,26 @@ using System.Collections;
 
 public class PlayerControls : MonoBehaviour 
 {
-	public bool facingRight = true;
+    private BoxCollider2D playersBoxCollider;
 
 	public float moveForce = 25f;			
-	public float maxSpeed = 3f;	
+	public float maxSpeed = 3f;
+
+    private Animator PlayersAnim;
+
+    void Start()
+    {
+        playersBoxCollider = GetComponent<BoxCollider2D>();
+        PlayersAnim = GetComponent<Animator>();
+    }
 
     void FixedUpdate()
     {
-
         float h = Input.GetAxisRaw("Horizontal");
         float v = Input.GetAxisRaw("Vertical");
+
+        PlayersAnim.SetFloat("Horizontal", h);
+        PlayersAnim.SetFloat("Vertical", v);
 
         if (h * rigidbody2D.velocity.x < maxSpeed && v * rigidbody2D.velocity.y < maxSpeed)
             rigidbody2D.velocity = new Vector2(h * moveForce, v * moveForce);
@@ -29,21 +39,10 @@ public class PlayerControls : MonoBehaviour
         if (v == 0)
             rigidbody2D.velocity = new Vector2(rigidbody2D.velocity.x, 0);
 
-        if (h > 0 && !facingRight)
-            Flip();
-
-        else if (h < 0 && facingRight)
-            Flip();
-
-    }
-
-    void Flip()
-    {
-        facingRight = !facingRight;
-
-        Vector3 theScale = transform.localScale;
-        theScale.x *= -1;
-        transform.localScale = theScale;
+        if (Input.GetButtonDown("Fire2"))
+        {
+            PlayersAnim.SetTrigger("Attack");
+        }
     }
 }
 
