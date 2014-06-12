@@ -16,14 +16,14 @@ public class MainMenuGUI : MonoBehaviour {
 	private float buttonWidth;
 	private float buttonHeight;
 
-	// Use this for initialization
-	void Start () {
+	void Start () 
+    {
 		buttonWidth = menuWidth - buttonPaddingHorizontal * 2;
 		buttonHeight = menuHeight / buttonCount - buttonSpacing - buttonPaddingVertical / buttonCount;
 	}
-	
-	// Update is called once per frame
-	void OnGUI () {
+
+	void OnGUI () 
+    {
 		GUI.skin.button.fontSize = Mathf.RoundToInt(Screen.width * Camera.main.aspect / 64);
 
 		Rect menuPosition = new Rect(menuCenterHorizontal - menuWidth / 2, menuCenterVertical - menuHeight / 2, menuWidth, menuHeight);

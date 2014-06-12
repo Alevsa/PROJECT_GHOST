@@ -3,23 +3,21 @@ using System.Collections;
 
 public class PlayerControls : MonoBehaviour 
 {
-    private BoxCollider2D playersBoxCollider;
-
 	public float moveForce = 25f;			
 	public float maxSpeed = 3f;
+    public float h, v;
 
-    private Animator PlayersAnim;
+    public Animator PlayersAnim;
 
     void Start()
     {
 		Game.Unpause();
-        playersBoxCollider = GetComponent<BoxCollider2D>();
         PlayersAnim = GetComponent<Animator>();
     }
 
 	void Update()
 	{
-		if (Input.GetKeyDown(KeyCode.Escape))
+		if (Input.GetKeyDown(KeyCode.Escape) || Input.GetButtonDown("Start"))
 		{
 			if (Game.CurrentState == Game.State.Running)
 			{
@@ -34,8 +32,8 @@ public class PlayerControls : MonoBehaviour
 
     void FixedUpdate()
 	{
-        float h = Input.GetAxisRaw("Horizontal");
-        float v = Input.GetAxisRaw("Vertical");
+        h = Input.GetAxisRaw("Horizontal");
+        v = Input.GetAxisRaw("Vertical");
 
         PlayersAnim.SetFloat("Horizontal", h);
         PlayersAnim.SetFloat("Vertical", v);
