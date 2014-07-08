@@ -130,11 +130,13 @@ public class PlayerInteract : MonoBehaviour
             if (Conversation1)
             {
                 GUI.Label(new Rect((Screen.width / 1024) + 160, Screen.height - 110, Screen.width - 180, 140), Messages[1], bodyFontStyle);
+                secondInteract = true;
                 questAccepted = true;
             }
             if (Conversation2)
             {
                 GUI.Label(new Rect((Screen.width / 1024) + 160, Screen.height - 110, Screen.width - 180, 140), Messages[2], bodyFontStyle);
+                secondInteract = true;
                 questAccepted = false;
             }
         }
