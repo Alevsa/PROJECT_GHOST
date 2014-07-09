@@ -4,7 +4,7 @@ using System.Collections;
 public class PlayerInteract : MonoBehaviour 
 {
     public Texture2D Portrait;
-    public string Name;
+    public string PlayerName, NPCName;
     public float RadiusOfDetection;
 
     public Texture2D OptionHighlighter;
@@ -51,7 +51,7 @@ public class PlayerInteract : MonoBehaviour
         {
             if (secondButtonPress == 0)
             {
-                if (Messages[1] != null && yesSelected)
+                if (Messages[1] != null && yesSelected && !questAccepted)
                 {
                     if (Time.time > firstButtonPress + 1f)
                     {
@@ -60,7 +60,7 @@ public class PlayerInteract : MonoBehaviour
                     }
                 }
 
-                else if (Messages[2] != null && !yesSelected)
+                else if (Messages[2] != null && !yesSelected && !questAccepted)
                 {
                     if (Time.time > firstButtonPress + 1f)
                     {
@@ -68,17 +68,13 @@ public class PlayerInteract : MonoBehaviour
                         Conversation2 = true;
                     }
                 }
+                else if (Messages[3] != null && questAccepted)
+                        if (Time.time > firstButtonPress + 1f)
+                            EndConversation();
             }
 
             else if (Time.time > secondButtonPress + 1f)
-            {
-                playerInteracting = false;
-            }
-        }
-
-        if (!playerNearby)
-        {
-            playerInteracting = false;
+                EndConversation();
         }
 
         if (playerInteracting)
@@ -90,9 +86,20 @@ public class PlayerInteract : MonoBehaviour
         }
 
         else
-        {
             playersControls.enabled = true;
-        }
+    }
+
+    void EndConversation()
+    {
+        playerInteracting = false;
+        if (Conversation1)
+            questAccepted = true;
+        initialInteract = true;
+        firstButtonPress = 0;
+        secondButtonPress = 0;
+        Conversation1 = false;
+        Conversation2 = false;
+        yesSelected = true;
     }
 
     void OnGUI()
@@ -103,7 +110,7 @@ public class PlayerInteract : MonoBehaviour
         {
             GUI.Box(new Rect((Screen.width / 1024), Screen.height - 150, Screen.width - 5, 147), "");
             GUI.Label(new Rect((Screen.width / 1024) + 5, Screen.height - 150, 150, 150), Portrait);
-            GUI.Label(new Rect((Screen.width / 1024) + 160, Screen.height - 150, 100, 20), Name, nameFontStyle);
+            GUI.Label(new Rect((Screen.width / 1024) + 160, Screen.height - 150, 100, 20), NPCName, nameFontStyle);
 
             if (Messages[0] != null && !Conversation1 && !Conversation2 && !questAccepted)
             {
@@ -112,11 +119,8 @@ public class PlayerInteract : MonoBehaviour
                     yesSelected = true;
                 else if (h > 0)
                     yesSelected = false;
-
-                if (!secondInteract)
-                    GUI.Label(new Rect((Screen.width / 1024) + 160, Screen.height - 110, Screen.width - 180, 140), Messages[0], bodyFontStyle);
-                else
-                    GUI.Label(new Rect((Screen.width / 1024) + 160, Screen.height - 110, Screen.width - 180, 140), Messages[4], bodyFontStyle);
+ 
+                GUI.Label(new Rect((Screen.width / 1024) + 160, Screen.height - 110, Screen.width - 180, 140), (PlayerName + Messages[0]), bodyFontStyle);
 
                 GUI.Label(new Rect((Screen.width / 1024) + 480, Screen.height - 42, 60, 20), "Yes", bodyFontStyle);
                 GUI.Label(new Rect((Screen.width / 1024) + 560, Screen.height - 42, 60, 20), "No", bodyFontStyle);
@@ -128,17 +132,13 @@ public class PlayerInteract : MonoBehaviour
             }
             
             if (Conversation1)
-            {
                 GUI.Label(new Rect((Screen.width / 1024) + 160, Screen.height - 110, Screen.width - 180, 140), Messages[1], bodyFontStyle);
-                secondInteract = true;
-                questAccepted = true;
-            }
+
             if (Conversation2)
-            {
                 GUI.Label(new Rect((Screen.width / 1024) + 160, Screen.height - 110, Screen.width - 180, 140), Messages[2], bodyFontStyle);
-                secondInteract = true;
-                questAccepted = false;
-            }
+
+            if (questAccepted)
+                GUI.Label(new Rect((Screen.width / 1024) + 160, Screen.height - 110, Screen.width - 180, 140), Messages[3], bodyFontStyle);
         }
 
         GUIScaler.EndGUI();
