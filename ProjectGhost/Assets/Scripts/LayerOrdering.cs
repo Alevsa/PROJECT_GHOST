@@ -18,6 +18,6 @@ public class LayerOrdering : MonoBehaviour {
 		LowestPoint = (sprite.transform.position.y - sprite.bounds.size.y / 2);
 		sortingorder = Mathf.FloorToInt(10000 / LowestPoint);
 		GetComponent<SpriteRenderer>().sortingOrder = sortingorder;
-		Debug.Log(LowestPoint);
+		//Debug.Log(LowestPoint);
 	}
 }

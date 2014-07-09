@@ -6,13 +6,14 @@ public class PlayerInteract : MonoBehaviour
     public Texture2D Portrait;
     public string PlayerName, NPCName;
     public float RadiusOfDetection;
+    public Vector3 PositionFromCentre;
 
     public Texture2D OptionHighlighter;
     private int HighlightSizeWidth = 72, HighlightSizeHeight = 42;
 
     public string[] Messages;
 
-    private bool playerNearby, playerInteracting = false, initialInteract = true, secondInteract = false, yesSelected = true;
+    private bool playerNearby, playerInteracting = false, initialInteract = true, yesSelected = true;
     private bool Conversation1 = false, Conversation2 = false, questAccepted = false;
 
     private PlayerControls playersControls;
@@ -34,11 +35,28 @@ public class PlayerInteract : MonoBehaviour
 
         playersControls = GameObject.Find("Player").GetComponent<PlayerControls>();
         playersRigidbody = GameObject.Find("Player").GetComponent<Rigidbody2D>();
+
+        for (int i = 0; i < Messages.Length; i++)
+        {
+               string[] MessagesSplit = Messages[i].Split();
+               Messages[i] = "";
+               for (int j = 0; j < MessagesSplit.Length; j++)
+               {
+                   if (MessagesSplit[j] == "PlayerName")
+                   {
+                       MessagesSplit[j] = PlayerName;
+                       Messages[i] += MessagesSplit[j];
+                   }
+
+                   else
+                       Messages[i] += MessagesSplit[j] + " ";
+               }
+        }
     }
 
     void Update()
     {
-        playerNearby = Physics2D.OverlapCircle(this.transform.position, RadiusOfDetection, 1 << LayerMask.NameToLayer("Player"));
+        playerNearby = Physics2D.OverlapCircle(this.transform.position + PositionFromCentre, RadiusOfDetection, 1 << LayerMask.NameToLayer("Player"));
 
         if (playerNearby && Input.GetButtonDown("Fire1") && initialInteract)
         {
@@ -120,7 +138,7 @@ public class PlayerInteract : MonoBehaviour
                 else if (h > 0)
                     yesSelected = false;
  
-                GUI.Label(new Rect((Screen.width / 1024) + 160, Screen.height - 110, Screen.width - 180, 140), (PlayerName + Messages[0]), bodyFontStyle);
+                GUI.Label(new Rect((Screen.width / 1024) + 160, Screen.height - 110, Screen.width - 180, 140), Messages[0], bodyFontStyle);
 
                 GUI.Label(new Rect((Screen.width / 1024) + 480, Screen.height - 42, 60, 20), "Yes", bodyFontStyle);
                 GUI.Label(new Rect((Screen.width / 1024) + 560, Screen.height - 42, 60, 20), "No", bodyFontStyle);
