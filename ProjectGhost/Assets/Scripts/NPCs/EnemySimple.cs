@@ -15,19 +15,18 @@ public class EnemySimple : MonoBehaviour {
 	private float lastStep = 0;
 	private Vector3 startPoint = Vector3.zero;
 	private Vector3 endPoint = Vector3.zero;
+    public bool EnemyMoving = false;
 
-    public Animator EnemiesAnim;
-
-	// Use this for initialization
-	void Start () {
+	void Start () 
+    {
 		Step = Step / 20F;
 		Speed = Speed / 20F;
 		startPoint = transform.position;
 		endPoint = transform.position;
 	}
 	
-	// Update is called once per frame
-	void Update () {
+	void Update () 
+    {
 		lastStep += Time.deltaTime;
 
 		if (!RandomizeDelay)
@@ -44,7 +43,15 @@ public class EnemySimple : MonoBehaviour {
 	void MovePhysics()
 	{
 		rigidbody2D.velocity = Speed * (endPoint - startPoint).normalized;
+        StartCoroutine(Moving());
 	}
+
+    IEnumerator Moving()
+    {
+        EnemyMoving = true;
+        yield return new WaitForSeconds(Vector3.Distance(endPoint, startPoint)/Speed);
+        EnemyMoving = false;
+    }
 
 	void AcquireRoute (float step)
 	{
