@@ -16,6 +16,8 @@ public class EnemySimple : MonoBehaviour {
 	private Vector3 startPoint = Vector3.zero;
 	private Vector3 endPoint = Vector3.zero;
 
+    public Animator EnemiesAnim;
+
 	// Use this for initialization
 	void Start () {
 		Step = Step / 20F;
