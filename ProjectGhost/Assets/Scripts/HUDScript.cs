@@ -92,7 +92,5 @@ public class HUDScript : MonoBehaviour {
 		guiContent.text = Money.ToString();
 
 		GUI.Box(MoneyBarPosition, guiContent);
-
-
 	}
 }

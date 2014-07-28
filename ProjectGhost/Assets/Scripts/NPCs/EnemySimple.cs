@@ -8,36 +8,69 @@ public class EnemySimple : MonoBehaviour {
 	public bool EightWayMovement = false;
 	public float RandomizeByDivider = 2F;
 
+
 	public float Step;
 	public float Speed;
 	public float Delay;
+
+	public float AggroRange;
+
+	public int Damage;
+
+	[HideInInspector]
+	public bool EnemyMoving = false;
 	
 	private float lastStep = 0;
 	private Vector3 startPoint = Vector3.zero;
 	private Vector3 endPoint = Vector3.zero;
-    public bool EnemyMoving = false;
-
+	private Vector2 inCollision = Vector2.zero;
+	private bool targetAcquired = false;
+	private GameObject Player;
+	
 	void Start () 
     {
 		Step = Step / 20F;
 		Speed = Speed / 20F;
 		startPoint = transform.position;
 		endPoint = transform.position;
+		Player = GameObject.FindGameObjectWithTag ("Player");
 	}
 	
 	void Update () 
     {
 		lastStep += Time.deltaTime;
 
+		if (Aggressive) {
+			if (Vector3.Distance (Player.transform.position, transform.position) <= AggroRange) {
+					targetAcquired = true;
+					AcquireRoute (Step);
+					MovePhysics ();
+					return;
+			} else
+					targetAcquired = false;
+		}
+
 		if (!RandomizeDelay)
-				if (lastStep >= Delay) {
+		{
+			if (lastStep >= Delay) {
 					AcquireRoute (Step);
 					lastStep = 0;
-					MovePhysics();
-				}
+					MovePhysics ();
+			}
+		}
+		else{
+			if (lastStep >= Delay / RandomizeByDivider + Random.Range (0F, Delay/RandomizeByDivider)) {
+				AcquireRoute (Step);
+				lastStep = 0;
+				MovePhysics ();
+			}
+		}
 
-		if (transform.position == endPoint)
-			rigidbody2D.velocity = Vector2.zero;
+
+		if (Vector3.Distance (transform.position, startPoint) >= Vector3.Distance (endPoint, startPoint)) {
+						rigidbody2D.velocity = Vector2.zero;
+						EnemyMoving = false;
+				}
 	}
 
 	void MovePhysics()
@@ -56,6 +89,13 @@ public class EnemySimple : MonoBehaviour {
 	void AcquireRoute (float step)
 	{
 		Vector3 direction;
+
+		if (targetAcquired)
+		{
+			startPoint = transform.position;
+			endPoint = Player.transform.position;
+			return;
+		}
 
 		if (!EightWayMovement)
 		{
@@ -78,8 +118,20 @@ public class EnemySimple : MonoBehaviour {
 		int Vertical = 0;
 		int[] Direction = {-1, 0, 1};
 				
-		Horizontal = Direction[Random.Range (0, 3)];
-		Vertical = Direction[Random.Range (0, 3)];
+		Horizontal = Direction [Random.Range (0, 3)];
+		Vertical = Direction [Random.Range (0, 3)];
+
+		if (inCollision != Vector2.zero) {
+			if (inCollision.x - transform.position.x > 0 )
+				Horizontal = -1;
+			else
+				Horizontal = 1;
+
+			if (inCollision.y - transform.position.y > 0 )
+				Vertical = -1;
+			else
+				Vertical = 1;
+		}
 		
 		return new Vector2(Horizontal, Vertical);
 	}
@@ -93,11 +145,45 @@ public class EnemySimple : MonoBehaviour {
 
 		Axis = Random.Range (0, 2);
 
-		if (Axis == 0)
-			Horizontal = Direction[Random.Range (0, 2)];
-		else
-			Vertical = Direction[Random.Range (0, 2)];
+		if (Axis == 0) {
+			Horizontal = Direction [Random.Range (0, 2)];
+
+			if (inCollision != Vector2.zero) {
+				if (inCollision.x - transform.position.x > 0)
+						Horizontal = -1;
+				else
+						Horizontal = 1;
+			}
+		} 
+		else {
+			Vertical = Direction [Random.Range (0, 2)];
+
+			if (inCollision != Vector2.zero) {
+				if (inCollision.y - transform.position.y > 0 )
+					Vertical = -1;
+				else
+					Vertical = 1;
+			}
+		}
 
 		return new Vector2(Horizontal, Vertical);
+	}
+
+	void OnCollisionEnter2D (Collision2D collision)
+	{
+		rigidbody2D.velocity = Vector2.zero;
+		EnemyMoving = false;
+
+		if (collision.collider.tag != "Player")
+			inCollision = collision.collider.transform.position;
+
+		if (collision.collider.tag == "Player") {
+			collision.collider.gameObject.SendMessage("TakeDamage", Damage);
+		}
+	}
+
+	void OnCollisionExit2D (Collision2D collision)
+	{
+		inCollision = Vector2.zero;
 	}
 }

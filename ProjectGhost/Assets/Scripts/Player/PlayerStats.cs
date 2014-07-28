@@ -17,4 +17,8 @@ public class PlayerStats : MonoBehaviour {
 		if (Health > MaxHealth)
 			Health = MaxHealth;
 	}
+
+	void ApplyDamage (int Damage) {
+		Health -= Damage;
+	}
 }

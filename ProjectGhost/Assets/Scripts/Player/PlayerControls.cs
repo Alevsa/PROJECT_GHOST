@@ -9,6 +9,8 @@ public class PlayerControls : MonoBehaviour
 
     public Animator PlayersAnim;
 
+	private bool controlsDisabled = false;
+
     void Start()
     {
 		Game.Unpause();
@@ -32,6 +34,9 @@ public class PlayerControls : MonoBehaviour
 
     void FixedUpdate()
 	{
+		if (controlsDisabled)
+			return;
+
         h = Input.GetAxisRaw("Horizontal");
         v = Input.GetAxisRaw("Vertical");
 
@@ -58,5 +63,25 @@ public class PlayerControls : MonoBehaviour
             PlayersAnim.SetTrigger("Attack");
         }
     }
+
+	void OnCollisionEnter2D (Collision2D collision) {
+		if (collision.collider.tag == "Enemy") {
+			controlsDisabled = true;
+			rigidbody2D.velocity = (collider2D.transform.position - collision.collider.transform.position).normalized;
+			rigidbody2D.drag = 2F;
+
+			StartCoroutine (Knockback());
+		}
+	}
+
+	void TakeDamage (int Damage) {
+		SendMessageUpwards("ApplyDamage", Damage);
+	}
+	
+	IEnumerator Knockback() {
+		yield return new WaitForSeconds(0.5F);
+		rigidbody2D.drag = 0F;
+		controlsDisabled = false;
+	}
 }
 
