@@ -5,8 +5,9 @@ public class SceneTransition : MonoBehaviour
 {
     public string SceneToLoad;
     public PlayerControls playerControls;
+    private Rigidbody2D playersRigidbody;
     private bool SceneEntered = false;
-    public bool HorizontalTransition, VerticalTransition;
+    public bool HorizontalRightTransition, HorizontalLeftTransition, VerticalUpTransition, VerticalDownTransition;
 
     public float FadeTime = 3f;
     public Texture FadeTexture;
@@ -15,6 +16,8 @@ public class SceneTransition : MonoBehaviour
 	void Start () 
     {
         playerControls = GameObject.Find("Player").GetComponent<PlayerControls>();
+        playersRigidbody = GameObject.Find("Player").GetComponent<Rigidbody2D>();
+
 	}
 
     void OnTriggerEnter2D(Collider2D col)
@@ -34,10 +37,41 @@ public class SceneTransition : MonoBehaviour
     {
         if (SceneEntered)
         {
-            if (HorizontalTransition)
+            playersRigidbody.velocity = new Vector2(0, 0);
+            playerControls.PlayersAnim.SetFloat("Horizontal", 0);
+            playerControls.PlayersAnim.SetFloat("Vertical", 0);
+
+            if (HorizontalRightTransition)
+            {
                 playerControls.h = 1;
-            if (VerticalTransition)
+                playerControls.v = 0;
+            }
+            if (HorizontalLeftTransition)
+            {
+                playerControls.h = -1;
+                playerControls.v = 0;
+            }
+            if (VerticalUpTransition)
+            {
+                playerControls.h = 0;
                 playerControls.v = 1;
+            }
+            if (VerticalDownTransition)
+            {
+                playerControls.h = 0;
+                playerControls.v = -1;
+            }
+
+            playersRigidbody.velocity = new Vector2(playerControls.h * playerControls.moveForce, playerControls.v * playerControls.moveForce);
+            playerControls.PlayersAnim.SetFloat("Horizontal", playerControls.h);
+            playerControls.PlayersAnim.SetFloat("Vertical", playerControls.v);
+
+            if (Mathf.Abs(playersRigidbody.velocity.x) > playerControls.maxSpeed)
+                playersRigidbody.velocity = new Vector2(Mathf.Sign(playersRigidbody.velocity.x) * playerControls.maxSpeed, playersRigidbody.velocity.y);
+
+            if (Mathf.Abs(playersRigidbody.velocity.y) > playerControls.maxSpeed)
+                playersRigidbody.velocity = new Vector2(playersRigidbody.velocity.x, Mathf.Sign(playersRigidbody.velocity.y) * playerControls.maxSpeed);
+
             playerControls.enabled = false; 
         }
     }

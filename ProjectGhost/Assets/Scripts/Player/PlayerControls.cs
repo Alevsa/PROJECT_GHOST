@@ -3,8 +3,8 @@ using System.Collections;
 
 public class PlayerControls : MonoBehaviour 
 {
-	public float moveForce = 25f;			
-	public float maxSpeed = 3f;
+	public float moveForce = 8f;			
+	public float maxSpeed = 1f;
     public float h, v;
 
     public Animator PlayersAnim;
