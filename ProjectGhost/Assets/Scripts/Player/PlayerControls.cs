@@ -11,10 +11,16 @@ public class PlayerControls : MonoBehaviour
 
 	private bool controlsDisabled = false;
 
+    public GameObject Sword;
+    private GameObject cloneSword;
+    private Transform swordSpawn;
+    private float lastAttackTime;
+
     void Start()
     {
 		Game.Unpause();
         PlayersAnim = GetComponent<Animator>();
+        swordSpawn = transform.Find("SwordLocation");
     }
 
 	void Update()
@@ -58,14 +64,26 @@ public class PlayerControls : MonoBehaviour
         if (v == 0)
             rigidbody2D.velocity = new Vector2(rigidbody2D.velocity.x, 0);
 
-        if (Input.GetButtonDown("Fire2"))
+        //What do you think of this Evgeniy?
+        if (Input.GetButtonDown("Fire2") && ((Time.time - lastAttackTime) > 0.4f))
         {
+            if(cloneSword != null)
+                Destroy(cloneSword);
+            lastAttackTime = Time.time;
             PlayersAnim.SetTrigger("Attack");
+            cloneSword = (GameObject)Instantiate(Sword, swordSpawn.position, swordSpawn.rotation);
+            cloneSword.transform.parent = swordSpawn;
         }
+
+        if ((Time.time - lastAttackTime) > 0.4f)
+            Destroy(cloneSword);
+        //-------------------------------------
     }
 
-	void OnCollisionEnter2D (Collision2D collision) {
-		if (collision.collider.tag == "Enemy") {
+	void OnCollisionEnter2D (Collision2D collision) 
+    {
+		if (collision.collider.tag == "Enemy") 
+        {
 			controlsDisabled = true;
 			rigidbody2D.velocity = (collider2D.transform.position - collision.collider.transform.position).normalized;
 			rigidbody2D.drag = 2F;
@@ -74,11 +92,13 @@ public class PlayerControls : MonoBehaviour
 		}
 	}
 
-	void TakeDamage (int Damage) {
+	void TakeDamage (int Damage) 
+    {
 		SendMessageUpwards("ApplyDamage", Damage);
 	}
 	
-	IEnumerator Knockback() {
+	IEnumerator Knockback() 
+    {
 		yield return new WaitForSeconds(0.5F);
 		rigidbody2D.drag = 0F;
 		controlsDisabled = false;
