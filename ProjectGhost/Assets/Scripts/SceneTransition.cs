@@ -4,17 +4,22 @@ using System.Collections;
 public class SceneTransition : MonoBehaviour 
 {
     public string SceneToLoad;
+	public Vector3 StartCoordinates;
     public PlayerControls playerControls;
-    private Rigidbody2D playersRigidbody;
-    private bool SceneEntered = false;
+
     public bool HorizontalRightTransition, HorizontalLeftTransition, VerticalUpTransition, VerticalDownTransition;
 
     public float FadeTime = 3f;
     public Texture FadeTexture;
+
     private float AlphaFadeValue = 0f;
+	private Rigidbody2D playersRigidbody;
+	private MetaData playerData;
+	private bool SceneEntered = false;
 
 	void Start () 
     {
+		playerData = GameObject.Find ("PlayerMeta").GetComponent<MetaData> ();
         playerControls = GameObject.Find("Player").GetComponent<PlayerControls>();
         playersRigidbody = GameObject.Find("Player").GetComponent<Rigidbody2D>();
 
@@ -23,7 +28,10 @@ public class SceneTransition : MonoBehaviour
     void OnTriggerEnter2D(Collider2D col)
     {
         if (col.gameObject.tag == "Player")
-            StartCoroutine(MoveScene());
+		{
+			playerData.StartCoordinates = new Vector3 (StartCoordinates.x, StartCoordinates.y, StartCoordinates.z);
+			StartCoroutine (MoveScene ());
+		}
     }
 
     IEnumerator MoveScene()
@@ -86,4 +94,16 @@ public class SceneTransition : MonoBehaviour
         }
 
     }
+
+	void OnLevelWasLoaded()
+	{
+		StartCoroutine (DisableWarp ());
+	}
+
+	IEnumerator DisableWarp()
+	{
+		collider2D.enabled = false;
+		yield return new WaitForSeconds (FadeTime);
+		collider2D.enabled = true;
+	}
 }
