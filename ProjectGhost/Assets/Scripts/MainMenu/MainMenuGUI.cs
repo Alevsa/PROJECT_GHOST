@@ -3,6 +3,8 @@ using System.Collections;
 
 public class MainMenuGUI : MonoBehaviour {
 
+	public GameObject PlayerPrefab;
+
 	private float menuWidth = Screen.width / 3;
 	private float menuHeight = Screen.height / 2;
 
@@ -33,6 +35,9 @@ public class MainMenuGUI : MonoBehaviour {
 
 		if (GUI.Button (buttonPosition, "New Game"))
 		{
+			Object Player = Instantiate(PlayerPrefab);
+			Player.name = "PlayerMeta";
+			GameObject.Find("PlayerMeta").GetComponent<MetaData>().NewGame = true;
 			Application.LoadLevel("Opening & Tutorial");
 		}
 

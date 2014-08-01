@@ -6,6 +6,9 @@ public class MetaData : MonoBehaviour {
 	[HideInInspector]
 	public Vector3 StartCoordinates;
 
+	[HideInInspector]
+	public bool NewGame = true;
+
 	private PlayerControls playerControls;
 	private Transform playerTransform;
 
@@ -22,6 +25,15 @@ public class MetaData : MonoBehaviour {
 	}
 
 	void OnLevelWasLoaded (int level) {
+		if (NewGame)
+		{
+			playerTransform.position = GameObject.Find ("SpawnPoint").transform.position;
+			//GetComponent<HUDScript>().enabled = true;
+			//GameObject.Find ("Player").GetComponent<SpriteRenderer>().enabled = true;
+			NewGame = false;
+			return;
+		}
+
 		playerTransform = GameObject.Find ("Player").transform;
 		playerControls = gameObject.GetComponentInChildren<PlayerControls>();
 		playerTransform.position = StartCoordinates;
