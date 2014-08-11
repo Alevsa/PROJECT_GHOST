@@ -24,6 +24,7 @@ public class PlayerInteract : MonoBehaviour
 
     void Start()
     {
+
         nameFontStyle = new GUIStyle();
         nameFontStyle.fontSize = 30;
         nameFontStyle.normal.textColor = Color.white;

@@ -7,7 +7,7 @@ public class MetaData : MonoBehaviour {
 	public Vector3 StartCoordinates;
 
 	[HideInInspector]
-	public bool NewGame = true;
+	public bool isFromMainMenu;
 
 	private PlayerControls playerControls;
 	private Transform playerTransform;
@@ -25,12 +25,12 @@ public class MetaData : MonoBehaviour {
 	}
 
 	void OnLevelWasLoaded (int level) {
-		if (NewGame)
+		if (isFromMainMenu)
 		{
 			playerTransform.position = GameObject.Find ("SpawnPoint").transform.position;
-			//GetComponent<HUDScript>().enabled = true;
+			GetComponent<HUDScript>().enabled = true;
 			//GameObject.Find ("Player").GetComponent<SpriteRenderer>().enabled = true;
-			NewGame = false;
+			isFromMainMenu = false;
 			return;
 		}
 
