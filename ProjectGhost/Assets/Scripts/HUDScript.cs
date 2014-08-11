@@ -88,7 +88,7 @@ public class HUDScript : MonoBehaviour {
 		GUI.skin.box.fontSize = MoneyFontSize; 
 
 		GUIContent guiContent = new GUIContent();
-		//guiContent.image = MoneyIcon;
+		guiContent.image = MoneyIcon;
 		guiContent.text = Money.ToString();
 
 		GUI.Box(MoneyBarPosition, guiContent);
