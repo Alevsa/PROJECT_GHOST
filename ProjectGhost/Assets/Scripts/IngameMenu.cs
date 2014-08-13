@@ -35,6 +35,7 @@ public class IngameMenu : MonoBehaviour {
 			
 			if (GUI.Button (buttonPosition, "Main Menu"))
 			{
+				Destroy(GameObject.Find ("PlayerMeta"));
 				Application.LoadLevel("Main Menu");
 			}
 			

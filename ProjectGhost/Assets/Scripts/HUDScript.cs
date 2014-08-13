@@ -85,12 +85,16 @@ public class HUDScript : MonoBehaviour {
 
 		GUI.skin.box.imagePosition = ImagePosition.ImageLeft;
 		GUI.skin.box.alignment = TextAnchor.MiddleRight;
-		GUI.skin.box.fontSize = MoneyFontSize; 
+		GUI.skin.box.fontSize = MoneyFontSize;
 
 		GUIContent guiContent = new GUIContent();
-		guiContent.image = MoneyIcon;
-		guiContent.text = Money.ToString();
+		//guiContent.image = MoneyIcon;
+		guiContent.text = Money.ToString().PadLeft (5);
 
 		GUI.Box(MoneyBarPosition, guiContent);
+
+		GUI.backgroundColor = Color.clear;
+		Rect MoneyImagePosition = new Rect (MoneyBarPosition.xMin - MoneyBarPosition.height, MoneyBarPosition.yMin, MoneyBarPosition.height, MoneyBarPosition.height);
+		GUI.Box (MoneyImagePosition, MoneyIcon);
 	}
 }

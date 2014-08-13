@@ -86,7 +86,7 @@ public class PlayerControls : MonoBehaviour
         {
 			controlsDisabled = true;
 			rigidbody2D.velocity = (collider2D.transform.position - collision.collider.transform.position).normalized;
-			rigidbody2D.drag = 2F;
+			rigidbody2D.drag = 3F;
 
 			StartCoroutine (Knockback());
 		}

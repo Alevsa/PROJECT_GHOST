@@ -36,7 +36,12 @@ public class MetaData : MonoBehaviour {
 
 		playerTransform = GameObject.Find ("Player").transform;
 		playerControls = gameObject.GetComponentInChildren<PlayerControls>();
-		playerTransform.position = StartCoordinates;
+		if (StartCoordinates != Vector3.zero)
+			playerTransform.position = StartCoordinates;
+		else
+			playerTransform.position = GameObject.Find ("SpawnPoint").transform.position;
+
+		StartCoordinates = Vector3.zero;
 		StartCoroutine (EnableControls ());
 	}
 
