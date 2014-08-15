@@ -133,6 +133,7 @@ Animator:
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
   m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -226,6 +227,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 47b909078d5c91141a5acdc87c794ae5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  swordEquipped: 1
 --- !u!212 &21200000
 SpriteRenderer:
   m_ObjectHideFlags: 1

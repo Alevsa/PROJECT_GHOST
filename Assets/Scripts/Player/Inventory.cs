@@ -2,8 +2,9 @@
 using System.Collections;
 using System.Collections.Generic;
 
-public class Inventory : MonoBehaviour {
-
+public class Inventory : MonoBehaviour 
+{
+    public bool swordEquipped = true;
 	public List<Item> items;
 
 	// Use this for initialization
@@ -13,10 +14,10 @@ public class Inventory : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		foreach (Item i in items)
-		{
-			Debug.Log (i.Name);
-		}
+        //foreach (Item i in items)
+        //{
+        //    //Debug.Log (i.Name);
+        //}
 	}
 
 	public void Get (Item item) {

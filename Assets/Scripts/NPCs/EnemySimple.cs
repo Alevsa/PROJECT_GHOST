@@ -1,8 +1,9 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class EnemySimple : MonoBehaviour {
-
+public class EnemySimple : MonoBehaviour 
+{
+    public int Health;
 	public bool Aggressive = false;
 	public bool RandomizeDelay = false;
 	public bool EightWayMovement = false;
@@ -38,6 +39,10 @@ public class EnemySimple : MonoBehaviour {
 	
 	void Update () 
     {
+        if (Health <= 0)
+        {
+            Destroy(this.gameObject);
+        }
 		lastStep += Time.deltaTime;
 
 		if (Aggressive) {
@@ -185,6 +190,14 @@ public class EnemySimple : MonoBehaviour {
 			collision.collider.gameObject.SendMessage("TakeDamage", Damage);
 		}
 	}
+
+    void OnTriggerEnter2D(Collider2D col)
+    {
+        if (col.tag == "Weapon")
+        {
+            Health -= 10;
+        }
+    }
 
 	void OnCollisionExit2D (Collision2D collision)
 	{

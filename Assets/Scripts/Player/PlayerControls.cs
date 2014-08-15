@@ -5,22 +5,26 @@ public class PlayerControls : MonoBehaviour
 {
 	public float moveForce = 8f;			
 	public float maxSpeed = 1f;
-    public float h, v;
 
+    [HideInInspector]
+    public float h, v;
+    [HideInInspector]
     public Animator PlayersAnim;
 
 	private bool controlsDisabled = false;
+    private Inventory playersInventory;
 
-    //public GameObject Sword;
-    //private GameObject cloneSword;
-    //private Transform swordSpawn;
+    public GameObject Sword;
+    private GameObject cloneSword;
+    private Transform swordSpawn;
     private float lastAttackTime;
 
     void Start()
     {
 		Game.Unpause();
         PlayersAnim = GetComponent<Animator>();
-        //swordSpawn = transform.Find("SwordLocation");
+        playersInventory = GameObject.Find("PlayerMeta").GetComponent<Inventory>();
+        swordSpawn = transform.Find("SwordLocation");
     }
 
 	void Update()
@@ -74,17 +78,21 @@ public class PlayerControls : MonoBehaviour
 
         if (Input.GetButtonDown("Fire2") && ((Time.time - lastAttackTime) > 0.4f))
             {
-        //    if(cloneSword != null)
-        //        Destroy(cloneSword);
                 lastAttackTime = Time.time;
-                PlayersAnim.SetTrigger("Attack");
-        //    cloneSword = (GameObject)Instantiate(Sword, swordSpawn.position, swordSpawn.rotation);
-        //    cloneSword.transform.parent = swordSpawn;
+
+                if(playersInventory.swordEquipped == true)
+                    {            
+                       cloneSword = (GameObject)Instantiate(Sword, swordSpawn.position, swordSpawn.rotation);
+                       cloneSword.transform.parent = swordSpawn;
+                       PlayersAnim.SetTrigger("SwordAttack");
+                    }
+
+                else
+                    PlayersAnim.SetTrigger("DisarmAttack");
             }
 
-        //if ((Time.time - lastAttackTime) > 0.4f)
-        //    Destroy(cloneSword);
-        ////-------------------------------------
+        if ((Time.time - lastAttackTime) > 0.4f)
+            Destroy(cloneSword);
     }
 
 	void OnCollisionEnter2D (Collision2D collision) 
