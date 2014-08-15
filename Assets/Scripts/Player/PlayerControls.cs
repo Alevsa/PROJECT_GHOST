@@ -11,16 +11,16 @@ public class PlayerControls : MonoBehaviour
 
 	private bool controlsDisabled = false;
 
-    public GameObject Sword;
-    private GameObject cloneSword;
-    private Transform swordSpawn;
+    //public GameObject Sword;
+    //private GameObject cloneSword;
+    //private Transform swordSpawn;
     private float lastAttackTime;
 
     void Start()
     {
 		Game.Unpause();
         PlayersAnim = GetComponent<Animator>();
-        swordSpawn = transform.Find("SwordLocation");
+        //swordSpawn = transform.Find("SwordLocation");
     }
 
 	void Update()
@@ -72,20 +72,19 @@ public class PlayerControls : MonoBehaviour
         if (v == 0)
             rigidbody2D.velocity = new Vector2(rigidbody2D.velocity.x, 0);
 
-        //What do you think of this Evgeniy?
         if (Input.GetButtonDown("Fire2") && ((Time.time - lastAttackTime) > 0.4f))
-        {
-            if(cloneSword != null)
-                Destroy(cloneSword);
-            lastAttackTime = Time.time;
-            PlayersAnim.SetTrigger("Attack");
-            cloneSword = (GameObject)Instantiate(Sword, swordSpawn.position, swordSpawn.rotation);
-            cloneSword.transform.parent = swordSpawn;
-        }
+            {
+        //    if(cloneSword != null)
+        //        Destroy(cloneSword);
+                lastAttackTime = Time.time;
+                PlayersAnim.SetTrigger("Attack");
+        //    cloneSword = (GameObject)Instantiate(Sword, swordSpawn.position, swordSpawn.rotation);
+        //    cloneSword.transform.parent = swordSpawn;
+            }
 
-        if ((Time.time - lastAttackTime) > 0.4f)
-            Destroy(cloneSword);
-        //-------------------------------------
+        //if ((Time.time - lastAttackTime) > 0.4f)
+        //    Destroy(cloneSword);
+        ////-------------------------------------
     }
 
 	void OnCollisionEnter2D (Collision2D collision) 
