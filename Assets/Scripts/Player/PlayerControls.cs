@@ -45,7 +45,7 @@ public class PlayerControls : MonoBehaviour
 				Game.CloseInventory();
 		}
 	}
-
+	//niggers
     void FixedUpdate()
 	{
 		if (controlsDisabled)
