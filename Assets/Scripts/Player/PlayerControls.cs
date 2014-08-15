@@ -45,7 +45,7 @@ public class PlayerControls : MonoBehaviour
 				Game.CloseInventory();
 		}
 	}
-
+	//gooks
     void FixedUpdate()
 	{
 		if (controlsDisabled)
