@@ -103,9 +103,7 @@ public class PlayerInteract : MonoBehaviour
             playersControls.PlayersAnim.SetFloat("Vertical", 0);
             playersControls.enabled = false;
         }
-
-        else
-            playersControls.enabled = true;
+            
     }
 
     void EndConversation()
@@ -119,6 +117,7 @@ public class PlayerInteract : MonoBehaviour
         Conversation1 = false;
         Conversation2 = false;
         yesSelected = true;
+        playersControls.enabled = true;
     }
 
     void OnGUI()
