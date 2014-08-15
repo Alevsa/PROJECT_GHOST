@@ -7,6 +7,8 @@ public class Slime : MonoBehaviour
     bool facingRight;
     private EnemySimple MovementScript;
 
+    //MergeTest
+
 	void Start () 
     {
         MovementScript = this.GetComponent<EnemySimple>();
