@@ -24,7 +24,7 @@ public class IngameMenu : MonoBehaviour {
 	
 	// Update is called once per frame
 	void OnGUI () {
-		if (Game.CurrentState == Game.State.Paused)
+		if (Game.CurrentState == Game.State.InGameMenu)
 		{
 			GUI.skin.button.fontSize = Mathf.RoundToInt(Screen.width * Camera.main.aspect / 64);
 			

@@ -41,13 +41,17 @@ public class EnemySimple : MonoBehaviour {
 		lastStep += Time.deltaTime;
 
 		if (Aggressive) {
-			if (Vector3.Distance (Player.transform.position, transform.position) <= AggroRange) {
-					targetAcquired = true;
-					AcquireRoute (Step);
-					MovePhysics ();
-					return;
-			} else
-					targetAcquired = false;
+			if (lastStep >= Delay)
+			{
+				if (Vector3.Distance (Player.transform.position, transform.position) <= AggroRange) {
+						targetAcquired = true;
+						AcquireRoute (Step);
+						lastStep = 0;
+						MovePhysics ();
+						return;
+				} else
+						targetAcquired = false;
+			}
 		}
 
 		if (!RandomizeDelay)

@@ -11158,7 +11158,7 @@ MonoBehaviour:
   Portrait: {fileID: 2800000, guid: f46f3f43c94f64847898d38980cd968e, type: 3}
   PlayerName: Ivan
   NPCName: Katerina
-  RadiusOfDetection: .0500000007
+  RadiusOfDetection: .400000006
   PositionFromCentre: {x: 0, y: -.0500000007, z: 0}
   OptionHighlighter: {fileID: 2800000, guid: c9613ea0f90fbd64ca9803d3a50ca67d, type: 3}
   Messages:
@@ -11213,7 +11213,7 @@ BoxCollider2D:
   m_Enabled: 1
   m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_Size: {x: .0500000007, y: .0199999996}
+  m_Size: {x: .100000001, y: .100000001}
   m_Center: {x: 0, y: -.0949999988}
 --- !u!114 &276903069
 MonoBehaviour:
@@ -90317,11 +90317,11 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 11400000, guid: 460b969d73548124897019566b5a7a6b, type: 2}
       propertyPath: RadiusOfDetection
-      value: .0500000007
+      value: .400000006
       objectReference: {fileID: 0}
     - target: {fileID: 6100000, guid: 460b969d73548124897019566b5a7a6b, type: 2}
       propertyPath: m_Size.y
-      value: .0199999996
+      value: .100000001
       objectReference: {fileID: 0}
     - target: {fileID: 6100000, guid: 460b969d73548124897019566b5a7a6b, type: 2}
       propertyPath: m_Center.y
@@ -90334,6 +90334,10 @@ Prefab:
     - target: {fileID: 400000, guid: 460b969d73548124897019566b5a7a6b, type: 2}
       propertyPath: m_RootOrder
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6100000, guid: 460b969d73548124897019566b5a7a6b, type: 2}
+      propertyPath: m_Size.x
+      value: .100000001
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 460b969d73548124897019566b5a7a6b, type: 2}

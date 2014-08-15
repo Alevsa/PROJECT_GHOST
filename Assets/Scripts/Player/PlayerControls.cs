@@ -27,14 +27,22 @@ public class PlayerControls : MonoBehaviour
 	{
 		if (Input.GetKeyDown(KeyCode.Escape) || Input.GetButtonDown("Start"))
 		{
+			if (Game.CurrentState != Game.State.InGameMenu)
+			{
+				Game.OpenInGameMenu();
+			}
+			else if (Game.CurrentState == Game.State.InGameMenu)
+			{
+				Game.CloseInGameMenu();
+			}
+		}
+
+		if (Input.GetKeyDown (KeyCode.F1))
+		{
 			if (Game.CurrentState == Game.State.Running)
-			{
-				Game.Pause();
-			}
-			else if (Game.CurrentState == Game.State.Paused)
-			{
-				Game.Unpause();
-			}
+				Game.OpenInventory();
+			else if (Game.CurrentState == Game.State.InInventory)
+				Game.CloseInventory();
 		}
 	}
 
