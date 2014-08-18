@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public abstract class Item{
+public abstract class Item: MonoBehaviour{
 
 	public int id;
 	public string Name;

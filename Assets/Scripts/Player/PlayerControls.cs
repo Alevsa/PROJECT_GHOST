@@ -80,19 +80,21 @@ public class PlayerControls : MonoBehaviour
             {
                 lastAttackTime = Time.time;
 
-                if(playersInventory.swordEquipped == true)
-                    {            
-                       cloneSword = (GameObject)Instantiate(Sword, swordSpawn.position, swordSpawn.rotation);
-                       cloneSword.transform.parent = swordSpawn;
-                       PlayersAnim.SetTrigger("SwordAttack");
-                    }
-
-                else
-                    PlayersAnim.SetTrigger("DisarmAttack");
+				playersInventory.EquippedWeapon.Attack();
+//                if(playersInventory.swordEquipped == true)
+//                    {            
+//                       cloneSword = (GameObject)Instantiate(Sword, swordSpawn.position, swordSpawn.rotation);
+//                       cloneSword.transform.parent = swordSpawn;
+//                       PlayersAnim.SetTrigger("SwordAttack");
+//                    }
+//
+//                else
+//                    PlayersAnim.SetTrigger("DisarmAttack");
             }
 
         if ((Time.time - lastAttackTime) > 0.4f)
-            Destroy(cloneSword);
+			playersInventory.EquippedWeapon.EndAttack ();
+//			Destroy (cloneSword);
     }
 
 	void OnCollisionEnter2D (Collision2D collision) 

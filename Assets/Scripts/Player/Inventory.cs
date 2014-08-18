@@ -6,6 +6,7 @@ public class Inventory : MonoBehaviour
 {
     public bool swordEquipped = true;
 	public List<Item> items;
+	public Weapon EquippedWeapon;
 
 	// Use this for initialization
 	void Start () {
