@@ -4,11 +4,14 @@ using System.Collections;
 public class EnemySimple : MonoBehaviour 
 {
     public int Health;
+    public float NoDamagePeriod = 2f;
+    private float lastHitTime;
+    private SpriteRenderer enemyRenderer;
+
 	public bool Aggressive = false;
 	public bool RandomizeDelay = false;
 	public bool EightWayMovement = false;
 	public float RandomizeByDivider = 2F;
-
 
 	public float Step;
 	public float Speed;
@@ -41,8 +44,9 @@ public class EnemySimple : MonoBehaviour
     {
         if (Health <= 0)
         {
-            Destroy(this.gameObject);
+            this.gameObject.SendMessage("Death");
         }
+
 		lastStep += Time.deltaTime;
 
 		if (Aggressive) {
@@ -195,7 +199,10 @@ public class EnemySimple : MonoBehaviour
     {
         if (col.tag == "Weapon")
         {
-            Health -= 10;
+            if (Time.time > lastHitTime + NoDamagePeriod)
+            {
+                lastHitTime = Time.time;
+            }
         }
     }
 

@@ -4,10 +4,8 @@ using System.Collections;
 public class Slime : MonoBehaviour 
 {
     public Animator SlimeAnim;
-    bool facingRight;
+    private bool facingRight;
     private EnemySimple MovementScript;
-
-    //MergeTest
 
 	void Start () 
     {
@@ -24,6 +22,11 @@ public class Slime : MonoBehaviour
          if (rigidbody2D.velocity.x > 0 && !facingRight)
              Flip();
 	}
+
+    void Death()
+    {
+        Destroy(this.gameObject);
+    }
 
     void Flip()
     {

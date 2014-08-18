@@ -4489,6 +4489,7 @@ Animator:
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
   m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
 --- !u!50 &1165399640
 Rigidbody2D:
   m_ObjectHideFlags: 0
@@ -4518,6 +4519,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Health: 20
+  NoDamagePeriod: 2
   Aggressive: 0
   RandomizeDelay: 0
   EightWayMovement: 0
