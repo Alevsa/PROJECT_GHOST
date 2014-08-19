@@ -15,12 +15,12 @@ public class Slime : MonoBehaviour
 	
 	void Update () 
     {
-         SlimeAnim.SetBool("Moving", MovementScript.EnemyMoving);
-         if (rigidbody2D.velocity.x < 0 && facingRight)
-             Flip();
-
-         if (rigidbody2D.velocity.x > 0 && !facingRight)
-             Flip();
+		SlimeAnim.SetBool("Moving", MovementScript.EnemyMoving);
+         //if (rigidbody2D.velocity.x < 0 && facingRight)
+           //  Flip();
+		
+         //if (rigidbody2D.velocity.x > 0 && !facingRight)
+            // Flip();
 	}
 
     void Death()
@@ -28,12 +28,13 @@ public class Slime : MonoBehaviour
         Destroy(this.gameObject);
     }
 
-    void Flip()
-    {
-        facingRight = !facingRight;
+  	//void Flip()
+	//  {
+   	//	facingRight = !facingRight;
+	//
+ 	//	Vector3 theScale = transform.localScale;
+	//	theScale.x *= -1;
+	//	transform.localScale = theScale;
+	//}
 
-        Vector3 theScale = transform.localScale;
-        theScale.x *= -1;
-        transform.localScale = theScale;
-    }
 }

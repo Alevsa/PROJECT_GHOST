@@ -4489,7 +4489,6 @@ Animator:
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
   m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
 --- !u!50 &1165399640
 Rigidbody2D:
   m_ObjectHideFlags: 0
@@ -4563,7 +4562,7 @@ SpriteRenderer:
   m_ScaleInLightmap: 1
   m_SortingLayerID: 2594454705
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300002, guid: 9727e23d909276240bea4e867081943a, type: 3}
+  m_Sprite: {fileID: 21300002, guid: 705ca65ba77460943b9f3da54d385006, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
 --- !u!4 &1165399644
 Transform:
@@ -7328,7 +7327,7 @@ Prefab:
     - target: {fileID: 21200000, guid: 0848cdf82145bd245ae303d713b47393, type: 2}
       propertyPath: m_Sprite
       value: 
-      objectReference: {fileID: 21300002, guid: 9727e23d909276240bea4e867081943a,
+      objectReference: {fileID: 21300002, guid: 705ca65ba77460943b9f3da54d385006,
         type: 3}
     - target: {fileID: 9500000, guid: 0848cdf82145bd245ae303d713b47393, type: 2}
       propertyPath: m_Enabled
